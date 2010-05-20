@@ -108,9 +108,9 @@ plot = do { reserved "*PLOT"
 
 
 -- *END
-end :: Parser I.InputData
+end :: Parser ()
 end = do { reserved "*END"
-         ; return I.End
+         ; return ()
          }
 
 

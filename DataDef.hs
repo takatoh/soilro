@@ -11,7 +11,6 @@ data InputData = InputData { iGZero :: G
                            , iHMax  :: H
                            , iPlotG :: [Gamma]
                            }
-               | End
                | ParseErr String
                deriving (Show, Eq)
 
