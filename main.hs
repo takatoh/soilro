@@ -22,7 +22,7 @@ main = do argv <- getArgs
               putStrLn $ usageInfo header options
             else do cs <- readFile (head n)
                     input <- return $ P.parseInputData cs
-                    model <- return $ roModel input
+                    model <- return $ genModel (optModelType o) input
                     format <- return $ genFormatter (optOutputFormat o)
                     putStr $ format $ map model $ D.iPlotG input
 
@@ -33,11 +33,13 @@ main = do argv <- getArgs
 
 data Options = Options { optShowVersion  :: Bool
                        , optShowHelp     :: Bool
+                       , optModelType    :: String
                        , optOutputFormat :: String
                        } deriving (Show, Eq)
 
 defaultOptions = Options  { optShowVersion  = False
                           , optShowHelp     = False
+                          , optModelType    = "ro"
                           , optOutputFormat = "standard"
                           }
 
@@ -48,6 +50,9 @@ options = [ Option []        ["csv"]
           , Option []        ["shake"]
             (NoArg (\ opts -> opts { optOutputFormat = "shake" }))
             "output for SHAKE"
+          , Option []        ["hd-model"]
+            (NoArg (\ opts -> opts { optModelType = "hd" }))
+            "H-D model"
           , Option ['v']     ["version"]
             (NoArg (\ opts -> opts { optShowVersion = True }))
             "show version"
@@ -98,8 +103,14 @@ formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
                in
                if length t == 0 then h:[] else h : fold8 t
 
-
 ---------------------------------------------------------------------------
+
+-- Models
+
+genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, Double, D.H)
+genModel "hd" = hdModel
+genModel _    = roModel    -- R-O model in Default
+
 
 -- R-O model
 
@@ -118,6 +129,18 @@ calcGRatio :: D.Gamma -> D.Gamma -> Double -> Double
 calcGRatio g gh b = bisectionMethod f 0.0 1.0
   where
     f x = x * (1 + (2 * x * (g/gh)) ** (b-1)) - 1
+
+
+-- H-D model
+
+hdModel :: D.InputData -> D.Gamma -> (D.Gamma, Double, D.H)
+hdModel input gamma = (gamma, gRatio, h)
+  where
+    g0     = D.iGZero input
+    gammaH = D.iGHalf input
+    hmax   = D.iHMax input
+    gRatio = 1.0 / (1.0 + gamma / gammaH)
+    h      = hmax * (1 - gRatio)
 
 --------------------------------------------------------------------------------
 
