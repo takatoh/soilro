@@ -7,5 +7,5 @@ soilro.exe: main.hs InputDataParser.hs DataDef.hs
 
 
 clean:
-	del *.hi *.o *.exe soilro.exe.manifest
+	rm *.hi *.o *.exe
 
