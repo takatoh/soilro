@@ -117,7 +117,6 @@ genModel _    = roModel    -- R-O model in Default
 roModel :: D.InputData -> D.Gamma -> (D.Gamma, Double, D.H)
 roModel input gamma = (gamma, gRatio, h)
   where
-    g0     = D.iGZero input
     gammaH = D.iGHalf input
     hmax   = D.iHMax input
     beta   = (2.0 + pi * hmax) / (2.0 - pi * hmax)
@@ -136,7 +135,6 @@ calcGRatio g gh b = bisectionMethod f 0.0 1.0
 hdModel :: D.InputData -> D.Gamma -> (D.Gamma, Double, D.H)
 hdModel input gamma = (gamma, gRatio, h)
   where
-    g0     = D.iGZero input
     gammaH = D.iGHalf input
     hmax   = D.iHMax input
     gRatio = 1.0 / (1.0 + gamma / gammaH)

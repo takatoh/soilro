@@ -6,8 +6,7 @@ type Gamma = Double
 type G     = Double
 type H     = Double
 
-data InputData = InputData { iGZero :: G
-                           , iGHalf :: Gamma
+data InputData = InputData { iGHalf :: Gamma
                            , iHMax  :: H
                            , iPlotG :: [Gamma]
                            }

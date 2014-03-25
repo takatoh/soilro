@@ -64,13 +64,12 @@ wordList = sepBy word whiteSpace
 
 -- Parse a whole input data.
 inputData :: Parser I.InputData
-inputData = do { gzero <- gZero
+inputData = do { optional gZero
                ; gammah <- gammaHalf
                ; hmax <- hMax
                ; plt <- plot
                ; e <- end
-               ; return I.InputData { I.iGZero = gzero
-                                    , I.iGHalf = gammah
+               ; return I.InputData { I.iGHalf = gammah
                                     , I.iHMax  = hmax
                                     , I.iPlotG = plt
                                     }
