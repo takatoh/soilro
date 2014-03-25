@@ -1,6 +1,4 @@
--- Sample input data for soilro.
-*G0
-  1.800
+-- Example for soilro input data.
 *GAMMA0.5  -- %
   0.150
 *HMAX
