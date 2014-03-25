@@ -4,7 +4,7 @@ import Text.ParserCombinators.Parsec
 import Text.ParserCombinators.Parsec.Expr
 import qualified Text.ParserCombinators.Parsec.Token as P
 import Text.ParserCombinators.Parsec.Language( haskellStyle, haskellDef )
-import Char
+import Data.Char
 
 import qualified DataDef as I
 
