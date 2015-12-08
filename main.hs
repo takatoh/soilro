@@ -17,14 +17,14 @@ main :: IO ()
 main = do argv <- getArgs
           (o, n) <- parseArgs argv
           if optShowVersion o then
-              putStrLn version
-            else if optShowHelp o then
-              putStrLn $ usageInfo header options
-            else do cs <- readFile (head n)
-                    input <- return $ P.parseInputData cs
-                    model <- return $ genModel (optModelType o) input
-                    format <- return $ genFormatter (optOutputFormat o)
-                    putStr $ format $ map model $ D.iPlotG input
+            putStrLn version
+          else if optShowHelp o then
+            putStrLn $ usageInfo header options
+          else do cs <- readFile (head n)
+                  let input = P.parseInputData cs
+                  let model = genModel (optModelType o) input
+                  let format = genFormatter (optOutputFormat o)
+                  putStr $ format $ map model $ D.iPlotG input
 
 
 ---------------------------------------------------------------------------
