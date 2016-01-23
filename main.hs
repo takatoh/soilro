@@ -73,12 +73,12 @@ parseArgs argv = case getOpt Permute options argv of
 
 -- Output formatters
 
-genFormatter :: String -> ([(D.Gamma, Double, D.H)] -> String)
+genFormatter :: String -> ([(D.Gamma, D.GRatio, D.H)] -> String)
 genFormatter "csv"   = formatCSV
 genFormatter "shake" = formatSHAKE
 genFormatter _       = formatOutput
 
-formatOutput :: [(D.Gamma, Double, D.H)] -> String
+formatOutput :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatOutput d = unlines $ header ++ map format d
   where
     format (gamma, ratio, h) = printf "   %-7f   %-7.3f   %-7.3f" gamma ratio h
@@ -86,12 +86,12 @@ formatOutput d = unlines $ header ++ map format d
              , "============================="
              ]
 
-formatCSV :: [(D.Gamma, Double, D.H)] -> String
+formatCSV :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatCSV d = unlines $ "gamma%,G/G0,h" : map format d
   where
     format (gamma, ratio, h) = printf "%f,%5.3f,%5.3f" gamma ratio h
 
-formatSHAKE :: [(D.Gamma, Double, D.H)] -> String
+formatSHAKE :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
   where
     headerRatio = [printf "%5d      gamma-G/G0" (length d)]
@@ -107,14 +107,14 @@ formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
 
 -- Models
 
-genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, Double, D.H)
+genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
 genModel "hd" = hdModel
 genModel _    = roModel    -- R-O model in Default
 
 
 -- R-O model
 
-roModel :: D.InputData -> D.Gamma -> (D.Gamma, Double, D.H)
+roModel :: D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
 roModel input gamma = (gamma, gRatio, h)
   where
     gammaH = D.iGHalf input
@@ -132,7 +132,7 @@ calcGRatio g gh b = bisectionMethod f 0.0 1.0
 
 -- H-D model
 
-hdModel :: D.InputData -> D.Gamma -> (D.Gamma, Double, D.H)
+hdModel :: D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
 hdModel input gamma = (gamma, gRatio, h)
   where
     gammaH = D.iGHalf input
