@@ -7,7 +7,7 @@ import Text.Printf
 import qualified DataDef as D
 import qualified InputDataParser as P
 
----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 progName = "soilro"
 version  = "v0.5.0"
@@ -27,7 +27,7 @@ main = do argv <- getArgs
                   putStr $ format $ map model $ D.iPlotG input
 
 
----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- Command-line options
 
@@ -37,11 +37,11 @@ data Options = Options { optShowVersion  :: Bool
                        , optOutputFormat :: String
                        } deriving (Show, Eq)
 
-defaultOptions = Options  { optShowVersion  = False
-                          , optShowHelp     = False
-                          , optModelType    = "ro"
-                          , optOutputFormat = "standard"
-                          }
+defaultOptions = Options { optShowVersion  = False
+                         , optShowHelp     = False
+                         , optModelType    = "ro"
+                         , optOutputFormat = "standard"
+                         }
 
 options :: [OptDescr (Options -> Options)]
 options = [ Option []        ["csv"]
@@ -69,7 +69,7 @@ parseArgs argv = case getOpt Permute options argv of
                    (o,n,[])   -> return (foldl (flip id) defaultOptions o, n)
                    (_,_,errs) -> ioError (userError (concat errs ++ usageInfo header options))
 
----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- Output formatters
 
@@ -103,7 +103,7 @@ formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
                in
                if length t == 0 then h:[] else h : fold8 t
 
----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- Models
 
@@ -144,7 +144,7 @@ hdModel input gamma = (gamma, gRatio, h)
 
 -- Bisection Method
 -- ATTENTION:  f x1 < 0 < f x2
---
+
 bisectionMethod :: (Double -> Double) -> Double -> Double -> Double
 bisectionMethod f x1 x2 =
   let xm = (x1 + x2) / 2
@@ -158,4 +158,3 @@ bisectionMethod f x1 x2 =
     bisectionMethod f x1 xm
 
 --------------------------------------------------------------------------------
-
