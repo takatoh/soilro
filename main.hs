@@ -50,6 +50,9 @@ options = [ Option []        ["csv"]
           , Option []        ["shake"]
             (NoArg (\ opts -> opts { optOutputFormat = "shake" }))
             "output for SHAKE"
+          , Option []        ["k-shake"]
+            (NoArg (\ opts -> opts { optOutputFormat = "k-shake" }))
+            "output for k-SHAKE(CSV)"
           , Option []        ["hd-model"]
             (NoArg (\ opts -> opts { optModelType = "hd" }))
             "H-D model"
@@ -74,9 +77,10 @@ parseArgs argv = case getOpt Permute options argv of
 -- Output formatters
 
 genFormatter :: String -> ([(D.Gamma, D.GRatio, D.H)] -> String)
-genFormatter "csv"   = formatCSV
-genFormatter "shake" = formatSHAKE
-genFormatter _       = formatOutput
+genFormatter "csv"     = formatCSV
+genFormatter "shake"   = formatSHAKE
+genFormatter "k-shake" = formatKSHAKE
+genFormatter _         = formatOutput
 
 formatOutput :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatOutput d = unlines $ header ++ map format d
@@ -102,6 +106,11 @@ formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
     fold8 xs = let (h,t) = splitAt 8 xs
                in
                if length t == 0 then h:[] else h : fold8 t
+
+formatKSHAKE :: [(D.Gamma, D.GRatio, D.H)] -> String
+formatKSHAKE d = unlines $ "gamma%,G/G0,h%" : map format d
+  where
+    format (gamma, ratio, h) = printf "%f,%5.3f,%5.3f" gamma ratio (h * 100.0)
 
 --------------------------------------------------------------------------------
 
