@@ -93,7 +93,7 @@ formatOutput d = unlines $ header ++ map format d
 formatCSV :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatCSV d = unlines $ "gamma%,G/G0,h" : map format d
   where
-    format (gamma, ratio, h) = printf "%f,%5.3f,%5.3f" gamma ratio h
+    format (gamma, ratio, h) = printf "%f,%f,%f" gamma ratio h
 
 formatSHAKE :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
@@ -110,7 +110,7 @@ formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
 formatKSHAKE :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatKSHAKE d = unlines $ "gamma%,G/G0,h%" : map format d
   where
-    format (gamma, ratio, h) = printf "%f,%5.3f,%5.3f" gamma ratio (h * 100.0)
+    format (gamma, ratio, h) = printf "%f,%f,%f" gamma ratio (h * 100.0)
 
 --------------------------------------------------------------------------------
 
