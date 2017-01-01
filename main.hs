@@ -57,7 +57,7 @@ options = [ Option []        ["csv"]
             (NoArg (\ opts -> opts { optModelType = "hd" }))
             "H-D model"
           , Option []        ["modified-ro-model"]
-            (NoArg (\ opts -> opts { optModelType = "rmo" }))
+            (NoArg (\ opts -> opts { optModelType = "mro" }))
             "modified R-O model"
           , Option ['v']     ["version"]
             (NoArg (\ opts -> opts { optShowVersion = True }))
@@ -96,7 +96,7 @@ formatOutput d = unlines $ header ++ map format d
 formatCSV :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatCSV d = unlines $ "gamma%,G/G0,h" : map format d
   where
-    format (gamma, ratio, h) = printf "%f,%5.3f,%5.3f" gamma ratio h
+    format (gamma, ratio, h) = printf "%f,%f,%f" gamma ratio h
 
 formatSHAKE :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
@@ -121,7 +121,7 @@ formatKSHAKE d = unlines $ "gamma%,G/G0,h%" : map format d
 
 genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
 genModel "hd"  = hdModel
-genModel "rmo" = modifiedRoModel
+genModel "mro" = modifiedRoModel
 genModel _     = roModel          -- R-O model in Default
 
 
