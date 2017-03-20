@@ -24,25 +24,10 @@ lexer = P.makeTokenParser
 
 whiteSpace = P.whiteSpace lexer
 lexeme     = P.lexeme lexer
-symbol     = P.symbol lexer
-natural    = P.natural lexer
-parens     = P.parens lexer
-semi       = P.semi lexer
-comma      = P.comma lexer
-identifier = P.identifier lexer
 reserved   = P.reserved lexer
-reservedOp = P.reservedOp lexer
 
 
 --------------------------------------------------------------------------------
-
--- Pair of real number
-number_pair :: Parser (Double, Double)
-number_pair = do { n1 <- number
-                 ; optional comma
-                 ; n2 <- number
-                 ; return (n1, n2)
-                 }
 
 -- Real number
 number :: Parser Double
@@ -51,13 +36,6 @@ number = lexeme (do { ds1 <- many1 digit
                     ; ds2 <- many1 digit
                     ; return (read (ds1 ++ "." ++ ds2))
                     })
-
-
-word :: Parser String
-word = many1 letter
-
-wordList :: Parser [String]
-wordList = sepBy word whiteSpace
 
 
 --------------------------------------------------------------------------------
@@ -131,4 +109,4 @@ parseInputData :: String -> I.InputData
 parseInputData = runLex inputData
 
 
-
+--------------------------------------------------------------------------------
