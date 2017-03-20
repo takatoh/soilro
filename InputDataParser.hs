@@ -1,9 +1,9 @@
 module InputDataParser ( parseInputData ) where
 
-import Text.ParserCombinators.Parsec
-import Text.ParserCombinators.Parsec.Expr
-import qualified Text.ParserCombinators.Parsec.Token as P
-import Text.ParserCombinators.Parsec.Language( haskellStyle, haskellDef )
+import Text.Parsec
+import Text.Parsec.String
+import qualified Text.Parsec.Token as P
+import Text.Parsec.Language( haskellStyle, haskellDef )
 import Data.Char
 
 import qualified DataDef as I
