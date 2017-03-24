@@ -140,7 +140,7 @@ roModel input gamma = (gamma, gRatio, h)
 calcGRatio :: D.Gamma -> D.Gamma -> Double -> Double
 calcGRatio g gh b = bisectionMethod f 0.0 1.0
   where
-    f x = x * (1 + (2 * x * (g / gh)) ** (b - 1)) - 1
+    f x = x * (1.0 + (2.0 * x * (g / gh)) ** (b - 1.0)) - 1.0
 
 
 -- H-D model
