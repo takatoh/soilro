@@ -3,7 +3,7 @@ module InputDataParser ( parseInputData ) where
 import Text.Parsec
 import Text.Parsec.String
 import qualified Text.Parsec.Token as P
-import Text.Parsec.Language( haskellStyle, haskellDef )
+import Text.Parsec.Language( haskellStyle )
 import Data.Char
 
 import qualified DataDef as I
