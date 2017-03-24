@@ -8,7 +8,6 @@ import Data.Char
 
 import qualified DataDef as I
 
-
 --------------------------------------------------------------------------------
 
 lexer :: P.TokenParser ()
@@ -26,7 +25,6 @@ whiteSpace = P.whiteSpace lexer
 lexeme     = P.lexeme lexer
 reserved   = P.reserved lexer
 
-
 --------------------------------------------------------------------------------
 
 -- Real number
@@ -36,7 +34,6 @@ number = lexeme (do { ds1 <- many1 digit
                     ; ds2 <- many1 digit
                     ; return (read (ds1 ++ "." ++ ds2))
                     })
-
 
 --------------------------------------------------------------------------------
 
@@ -74,7 +71,6 @@ hMax = do { reserved "*HMAX"
           ; return h
           }
 
-
 -- *PLOT
 plot :: Parser [I.Gamma]
 plot = do { reserved "*PLOT"
@@ -83,13 +79,11 @@ plot = do { reserved "*PLOT"
           }
      <?> "Error: PLOT"
 
-
 -- *END
 end :: Parser ()
 end = do { reserved "*END"
          ; return ()
          }
-
 
 --------------------------------------------------------------------------------
 
@@ -107,6 +101,5 @@ runLex p input = run (do { whiteSpace
 
 parseInputData :: String -> I.InputData
 parseInputData = runLex inputData
-
 
 --------------------------------------------------------------------------------
