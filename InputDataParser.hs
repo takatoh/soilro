@@ -77,7 +77,6 @@ plot = do { reserved "*PLOT"
           ; p <- many1 number
           ; return p
           }
-     <?> "Error: PLOT"
 
 -- *END
 end :: Parser ()
