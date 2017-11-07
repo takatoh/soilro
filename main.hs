@@ -10,7 +10,7 @@ import qualified InputDataParser as P
 --------------------------------------------------------------------------------
 
 progName = "soilro"
-version  = "v0.7.1"
+version  = "v0.7.2"
 
 
 main :: IO ()
