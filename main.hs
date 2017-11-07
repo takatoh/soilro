@@ -26,7 +26,6 @@ main = do argv <- getArgs
                   let format = genFormatter (optOutputFormat o)
                   putStr $ format $ map model $ D.iPlotG input
 
-
 --------------------------------------------------------------------------------
 
 -- Command-line options
@@ -37,11 +36,13 @@ data Options = Options { optShowVersion  :: Bool
                        , optOutputFormat :: String
                        } deriving (Show, Eq)
 
+
 defaultOptions = Options { optShowVersion  = False
                          , optShowHelp     = False
                          , optModelType    = "ro"
                          , optOutputFormat = "standard"
                          }
+
 
 options :: [OptDescr (Options -> Options)]
 options = [ Option []        ["csv"]
@@ -67,8 +68,10 @@ options = [ Option []        ["csv"]
             "show this message"
           ]
 
+
 header :: String
 header = "Usage: " ++ progName ++ " [OPTIONS...] INPUT_FILE"
+
 
 parseArgs :: [String] -> IO (Options, [String])
 parseArgs argv = case getOpt Permute options argv of
@@ -85,6 +88,7 @@ genFormatter "shake"   = formatSHAKE
 genFormatter "k-shake" = formatKSHAKE
 genFormatter _         = formatOutput
 
+
 formatOutput :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatOutput d = unlines $ header ++ map format d
   where
@@ -93,10 +97,12 @@ formatOutput d = unlines $ header ++ map format d
              , "============================="
              ]
 
+
 formatCSV :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatCSV d = unlines $ "gamma%,G/G0,h" : map format d
   where
     format (gamma, ratio, h) = printf "%f,%f,%f" gamma ratio h
+
 
 formatSHAKE :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
@@ -109,6 +115,7 @@ formatSHAKE d = unlines $ headerRatio ++ gamma ++ ratio ++ headerH ++ gamma ++ h
     fold8 xs = let (h,t) = splitAt 8 xs
                in
                if length t == 0 then h:[] else h : fold8 t
+
 
 formatKSHAKE :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatKSHAKE d = unlines $ "gamma%,G/G0,h%" : map format d
