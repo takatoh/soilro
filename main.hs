@@ -22,9 +22,12 @@ main = do argv <- getArgs
             putStrLn $ usageInfo header options
           else do cs <- readFile (head n)
                   let input = P.parseInputData cs
-                  let model = genModel (optModelType o) input
-                  let format = genFormatter (optOutputFormat o)
-                  putStr $ format $ map model $ D.iPlotG input
+                  case input of
+                    D.ParseErr e      -> print e
+                    D.InputData g h p ->
+                      let model = genModel (optModelType o) input in
+                      let format = genFormatter (optOutputFormat o) in
+                      putStr $ format $ map model $ D.iPlotG input
 
 --------------------------------------------------------------------------------
 
