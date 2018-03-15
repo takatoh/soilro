@@ -1,4 +1,6 @@
 // Example for soilro input data.
+*MODEL
+  RO
 *GAMMA0.5  // %
   0.150
 *HMAX
