@@ -65,7 +65,7 @@ options = [ Option []        ["csv"]
 
 
 header :: String
-header = "Usage: " ++ progName ++ " [OPTIONS...] INPUT_FILE"
+header = "Usage: " ++ progName ++ " [OPTION] <INPUTFILE>\n\nOptions:"
 
 
 parseArgs :: [String] -> IO (Options, [String])
