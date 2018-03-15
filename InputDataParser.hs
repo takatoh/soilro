@@ -3,7 +3,7 @@ module InputDataParser ( parseInputData ) where
 import Text.Parsec
 import Text.Parsec.String
 import qualified Text.Parsec.Token as P
-import Text.Parsec.Language( haskellStyle )
+import Text.Parsec.Language( javaStyle )
 import Data.Char
 
 import qualified DataDef as I
@@ -12,7 +12,7 @@ import qualified DataDef as I
 
 lexer :: P.TokenParser ()
 lexer = P.makeTokenParser
-        ( haskellStyle
+        ( javaStyle
         { P.reservedNames = [ "*G0"
                             , "*GAMMA0.5"
                             , "*HMAX"
