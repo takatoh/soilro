@@ -24,8 +24,8 @@ main = do argv <- getArgs
                   let input = P.parseInputData cs
                   case input of
                     D.ParseErr e      -> print e
-                    D.InputData g h p ->
-                      let model = genModel (optModelType o) input in
+                    D.InputData m g h p ->
+                      let model = genModel m input in
                       let format = genFormatter (optOutputFormat o) in
                       putStr $ format $ map model $ D.iPlotG input
 
