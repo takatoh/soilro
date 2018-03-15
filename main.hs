@@ -35,14 +35,12 @@ main = do argv <- getArgs
 
 data Options = Options { optShowVersion  :: Bool
                        , optShowHelp     :: Bool
-                       , optModelType    :: String
                        , optOutputFormat :: String
                        } deriving (Show, Eq)
 
 
 defaultOptions = Options { optShowVersion  = False
                          , optShowHelp     = False
-                         , optModelType    = "ro"
                          , optOutputFormat = "standard"
                          }
 
@@ -57,9 +55,6 @@ options = [ Option []        ["csv"]
           , Option []        ["k-shake"]
             (NoArg (\ opts -> opts { optOutputFormat = "k-shake" }))
             "output for k-SHAKE(CSV)"
-          , Option []        ["hd-model"]
-            (NoArg (\ opts -> opts { optModelType = "hd" }))
-            "H-D model"
           , Option ['v']     ["version"]
             (NoArg (\ opts -> opts { optShowVersion = True }))
             "show version"
