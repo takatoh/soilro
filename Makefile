@@ -1,4 +1,4 @@
-.PHONY: build clean
+.PHONY: clean
 
 build: soilro.exe
 
