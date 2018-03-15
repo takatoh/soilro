@@ -60,9 +60,6 @@ options = [ Option []        ["csv"]
           , Option []        ["hd-model"]
             (NoArg (\ opts -> opts { optModelType = "hd" }))
             "H-D model"
-          , Option []        ["modified-ro-model"]
-            (NoArg (\ opts -> opts { optModelType = "mro" }))
-            "modified R-O model"
           , Option ['v']     ["version"]
             (NoArg (\ opts -> opts { optShowVersion = True }))
             "show version"
@@ -131,7 +128,6 @@ formatKSHAKE d = unlines $ "gamma%,G/G0,h%" : map format d
 
 genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
 genModel "hd"  = hdModel
-genModel "mro" = modifiedRoModel
 genModel _     = roModel          -- R-O model in Default
 
 
@@ -162,24 +158,6 @@ hdModel input gamma = (gamma, gRatio, h)
     hmax   = D.iHMax input
     gRatio = 1.0 / (1.0 + gamma / gammaH)
     h      = hmax * (1 - gRatio)
-
-
--- modified R-O model
-
-modifiedRoModel :: D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
-modifiedRoModel input gamma = (gamma, gRatio, h)
-  where
-    gammaH = D.iGHalf input
-    hmax   = D.iHMax input
-    beta   = (2.0 * pi * hmax) / (2.0 - pi * hmax)
-    gRatio = calcGRatioModified gamma gammaH beta
-    h      = 2.0 * beta / (pi * (beta + 2.0)) * (1.0 - gRatio)
-
-
-calcGRatioModified :: D.Gamma -> D.Gamma -> Double -> Double
-calcGRatioModified g gh b = bisectionMethod f 0.0 1.0
-  where
-    f x = x * (1.0 + (2.0 * x * (g / gh)) ** b) - 1.0
 
 --------------------------------------------------------------------------------
 
