@@ -13,7 +13,8 @@ import qualified DataDef as I
 lexer :: P.TokenParser ()
 lexer = P.makeTokenParser
         ( javaStyle
-        { P.reservedNames = [ "*G0"
+        { P.reservedNames = [ "*MODEL"
+                            , "*G0"
                             , "*GAMMA0.5"
                             , "*HMAX"
                             , "*PLOT"
@@ -35,20 +36,33 @@ number = lexeme (do { ds1 <- many1 digit
                     ; return (read (ds1 ++ "." ++ ds2))
                     })
 
+-- Word
+word :: Parser String
+word = lexeme (many1 letter)
+
 --------------------------------------------------------------------------------
 
 -- Parse a whole input data.
 inputData :: Parser I.InputData
-inputData = do { optional gZero
+inputData = do { m <- model
+               ; optional gZero
                ; gammah <- gammaHalf
                ; hmax <- hMax
                ; plt <- plot
                ; e <- end
-               ; return I.InputData { I.iGHalf = gammah
-                                    , I.iHMax  = hmax
-                                    , I.iPlotG = plt
+               ; return I.InputData { I.iModelType = map toLower m
+                                    , I.iGHalf     = gammah
+                                    , I.iHMax      = hmax
+                                    , I.iPlotG     = plt
                                     }
                }
+
+-- Model
+model :: Parser String
+model = do { reserved "*MODEL"
+           ; m <- word
+           ; return m
+           }
 
 -- G0
 gZero :: Parser I.G
