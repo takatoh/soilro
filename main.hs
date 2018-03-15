@@ -27,7 +27,7 @@ main = do argv <- getArgs
                     D.InputData m g h p ->
                       let model = genModel m input in
                       let format = genFormatter (optOutputFormat o) in
-                      putStr $ format $ map model $ D.iPlotG input
+                      putStr $ format $ map model p
 
 --------------------------------------------------------------------------------
 
