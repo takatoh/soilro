@@ -23,7 +23,7 @@ main = do argv <- getArgs
           else do cs <- readFile (head n)
                   let input = P.parseInputData cs
                   case input of
-                    D.ParseErr e      -> print e
+                    D.ParseErr e        -> print e
                     D.InputData m g h p ->
                       let model = genModel m input in
                       let format = genFormatter (optOutputFormat o) in
