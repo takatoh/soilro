@@ -7,11 +7,11 @@ Haskell製。
 
 GitHub からクローンします。
 
-    git clone git@github.com:takatoh/soilro.git
+    > git clone git@github.com:takatoh/soilro.git
 
-そして make build します。
+そして `make build` します。
 
-    make build
+    > make build
 
 これで、実行ファイル soilro.exe ができます。
 
@@ -47,21 +47,21 @@ GitHub からクローンします。
  10.0
 *END
 ```
-// から行末まではコメントです。
-\*MODEL には "RO"（ROモデル）か "HD"（HDモデル）を指定します。
-\*GAMMA0.5 と　\*HMAX はモデルのパラメータです。\*PLOT には計算させたいひずみを列挙します。
-最後に \*END が必要です。
+`//` から行末まではコメントです。
+`*MODEL` には `RO`（ROモデル）か `HD`（HDモデル）を指定します。
+`*GAMMA0.5` と `*HMAX` はモデルのパラメータです。`*PLOT` には計算させたいひずみを列挙します。
+最後に `*END` が必要です。
 
 ### 実行
 
 入力ファイル名をパラメータとして実行ファイルに渡します。
 結果は標準出力に出力されるので、適当なファイルにリダイレクトしてください。
 
-    soilro.exe example.dat　> result.txt
+    > soilro.exe example.dat　> result.txt
 
 ### コマンドラインオプション
 
-コマンドラインオプションについては、--help オプションでヘルプを参照してください。
+コマンドラインオプションについては `--help` オプションでヘルプを参照してください。
 
 ## License
 
