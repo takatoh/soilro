@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           soilro
-version:        1.0.1
+version:        1.1.0
 description:    Calculate strain-dependent properties of soil
 homepage:       https://github.com/takatoh/soilro#readme
 bug-reports:    https://github.com/takatoh/soilro/issues
