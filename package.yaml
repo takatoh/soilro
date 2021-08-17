@@ -1,0 +1,50 @@
+name:                soilro
+version:             1.0.1
+github:              "takatoh/soilro"
+license:             MIT
+author:              "takatoh"
+maintainer:          "takatoh.m@gmail.com"
+copyright:           "2021 takatoh"
+
+extra-source-files:
+- README.md
+- LICENSE.txt
+#- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Calculate strain-dependent properties of soil
+
+dependencies:
+- base >= 4.7 && < 5
+- parsec
+
+library:
+  source-dirs: src
+
+executables:
+  soilro:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - soilro
+
+tests:
+  soilo-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - soilro
