@@ -1,19 +1,21 @@
 # soilro
 
 地盤の非線形性状を示す G/G0～γ、h～γ 曲線を作成するプログラム。ROモデルとHDモデルに対応しています。
+
 Haskell製。
 
 ## Installation
 
 GitHub からクローンします。
 
-    > git clone git@github.com:takatoh/soilro.git
+    > git clone https://github.com/takatoh/soilro.git
 
-そして `make build` します。
+そして `stack setup` と `stack install` を実行します。
 
-    > make build
+    > stack setup
+    > stack install
 
-これで、実行ファイル soilro.exe ができます。
+これで、実行ファイル soilro.exe がインストールされます。
 
 ## Usage
 
