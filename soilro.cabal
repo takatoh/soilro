@@ -11,7 +11,7 @@ homepage:       https://github.com/takatoh/soilro#readme
 bug-reports:    https://github.com/takatoh/soilro/issues
 author:         takatoh
 maintainer:     takatoh.m@gmail.com
-copyright:      2021 takatoh
+copyright:      2010-2021 takatoh
 license:        MIT
 build-type:     Simple
 extra-source-files:

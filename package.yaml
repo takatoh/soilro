@@ -4,7 +4,7 @@ github:              "takatoh/soilro"
 license:             MIT
 author:              "takatoh"
 maintainer:          "takatoh.m@gmail.com"
-copyright:           "2021 takatoh"
+copyright:           "2010-2021 takatoh"
 
 extra-source-files:
 - README.md
