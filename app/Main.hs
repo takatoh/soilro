@@ -164,7 +164,7 @@ bisectionMethod f x1 x2 =
   let xm = (x1 + x2) / 2
       y = f xm
   in
-  if (abs y) < 0.0000000001 then
+  if abs y < 1.0e-12 then
     xm
   else if y < 0 then
     bisectionMethod f xm x2
