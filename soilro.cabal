@@ -27,6 +27,7 @@ library
       DataDef
       InputDataParser
       Model
+      Util
   other-modules:
       Paths_soilro
   hs-source-dirs:
