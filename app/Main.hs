@@ -6,6 +6,7 @@ import Text.Printf
 
 import qualified DataDef as D
 import qualified InputDataParser as P
+import qualified Model as M
 
 --------------------------------------------------------------------------------
 
@@ -25,7 +26,7 @@ main = do argv <- getArgs
                   case input of
                     D.ParseErr e        -> print e
                     D.InputData m g h p ->
-                      let model = genModel m input in
+                      let model = M.genModel m input in
                       let format = genFormatter (optOutputFormat o) in
                       putStr $ format $ map model p
 
@@ -116,59 +117,5 @@ formatKSHAKE :: [(D.Gamma, D.GRatio, D.H)] -> String
 formatKSHAKE d = unlines $ "gamma%,G/G0,h%" : map format d
   where
     format (gamma, ratio, h) = printf "%f,%f,%f" gamma ratio (h * 100.0)
-
---------------------------------------------------------------------------------
-
--- Models
-
-genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
-genModel "hd"  = hdModel
-genModel _     = roModel          -- R-O model in Default
-
-
--- R-O model
-
-roModel :: D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
-roModel input gamma = (gamma, gRatio, h)
-  where
-    gammaH = D.iGHalf input
-    hmax   = D.iHMax input
-    beta   = (2.0 + pi * hmax) / (2.0 - pi * hmax)
-    gRatio = calcGRatio gamma gammaH beta
-    h      = hmax * (1 - gRatio)
-
-
-calcGRatio :: D.Gamma -> D.Gamma -> Double -> Double
-calcGRatio g gh b = bisectionMethod f 0.0 1.0
-  where
-    f x = x * (1.0 + (2.0 * x * (g / gh)) ** (b - 1.0)) - 1.0
-
-
--- H-D model
-
-hdModel :: D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
-hdModel input gamma = (gamma, gRatio, h)
-  where
-    gammaH = D.iGHalf input
-    hmax   = D.iHMax input
-    gRatio = 1.0 / (1.0 + gamma / gammaH)
-    h      = hmax * (1 - gRatio)
-
---------------------------------------------------------------------------------
-
--- Bisection Method
--- ATTENTION:  f x1 < 0 < f x2
-
-bisectionMethod :: (Double -> Double) -> Double -> Double -> Double
-bisectionMethod f x1 x2 =
-  let xm = (x1 + x2) / 2
-      y = f xm
-  in
-  if abs y < 1.0e-12 then
-    xm
-  else if y < 0 then
-    bisectionMethod f xm x2
-  else
-    bisectionMethod f x1 xm
 
 --------------------------------------------------------------------------------
