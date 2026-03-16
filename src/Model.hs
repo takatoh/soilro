@@ -8,8 +8,9 @@ import Util (bisectionMethod)
 -- Models
 
 genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
-genModel "hd"  = hdModel
-genModel _     = roModel          -- R-O model in Default
+genModel "hd"         = hdModel
+genModel "hyperbolic" = hyperbolicModel
+genModel _            = roModel          -- R-O model in Default
 
 
 -- R-O model
@@ -39,5 +40,16 @@ hdModel input gamma = (gamma, gRatio, h)
     hmax   = D.iHMax input
     gRatio = 1.0 / (1.0 + gamma / gammaH)
     h      = hmax * (1 - gRatio)
+
+
+-- Hyperbolic model
+
+hyperbolicModel :: D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
+hyperbolicModel input gamma = (gamma, gRatio, h)
+  where
+    gammaH = D.iGHalf input
+    gRatio = 1.0 / (1.0 + gamma / gammaH)
+    h      = 4.0 / pi * (1.0 + ggh) * (1.0 - ggh * log (1.0 + 1.0 / ggh)) - 2.0 / pi
+    ggh    = gammaH / gamma
 
 --------------------------------------------------------------------------------
