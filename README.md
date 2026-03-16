@@ -59,7 +59,7 @@ GitHub からクローンします。
 入力ファイル名をパラメータとして実行ファイルに渡します。
 結果は標準出力に出力されるので、適当なファイルにリダイレクトしてください。
 
-    > soilro.exe example.dat　> result.txt
+    > soilro.exe example.dat > result.txt
 
 ### コマンドラインオプション
 
