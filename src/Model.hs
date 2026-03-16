@@ -8,8 +8,9 @@ import Util (bisectionMethod)
 -- Models
 
 genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
-genModel "hd"  = hdModel
-genModel _     = roModel          -- R-O model in Default
+genModel "hd"         = hdModel
+genModel "hyperbolic" = hyperbolicModel
+genModel _            = roModel          -- R-O model in Default
 
 
 -- R-O model
