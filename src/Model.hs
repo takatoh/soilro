@@ -40,4 +40,14 @@ hdModel input gamma = (gamma, gRatio, h)
     gRatio = 1.0 / (1.0 + gamma / gammaH)
     h      = hmax * (1 - gRatio)
 
+
+-- Hyperbolic model
+
+hyperbolicModel :: D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
+hyperbolicModel input gamma = (gamma, gRatio, h)
+  where
+    gammaH = D.iGHalf input
+    gRatio = 1.0 / (1.0 + gamma / gammaH)
+    h      = 4.0 / pi * (1.0 + gammaH / gamma) * (1.0 - gammaH / gamma * log (1.0 + gamma / gammaH)) - 2.0 / pi
+
 --------------------------------------------------------------------------------
