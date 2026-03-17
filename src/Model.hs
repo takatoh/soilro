@@ -8,9 +8,9 @@ import Util (bisectionMethod)
 -- Models
 
 genModel :: String -> Either String (D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H))
+genModel "ro"         = Right roModel
 genModel "hd"         = Right hdModel
 genModel "hyperbolic" = Right hyperbolicModel
-genModel "ro"         = Right roModel
 genModel _            = Left "Invalid model name"
 
 
