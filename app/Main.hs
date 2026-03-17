@@ -26,9 +26,12 @@ main = do argv <- getArgs
                   case input of
                     D.ParseErr e        -> print e
                     D.InputData m g h p ->
-                      let model = M.genModel m input in
-                      let format = genFormatter (optOutputFormat o) in
-                      putStr $ format $ map model p
+                      let model = M.genModel m in
+                      case model of
+                        Left mes -> putStrLn　mes
+                        Right m  ->
+                          let format = genFormatter (optOutputFormat o) in
+                          putStr $ format $ map (m input) p
 
 --------------------------------------------------------------------------------
 

@@ -7,10 +7,11 @@ import Util (bisectionMethod)
 
 -- Models
 
-genModel :: String -> D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H)
-genModel "hd"         = hdModel
-genModel "hyperbolic" = hyperbolicModel
-genModel _            = roModel          -- R-O model in Default
+genModel :: String -> Either String (D.InputData -> D.Gamma -> (D.Gamma, D.GRatio, D.H))
+genModel "ro"         = Right roModel
+genModel "hd"         = Right hdModel
+genModel "hyperbolic" = Right hyperbolicModel
+genModel _            = Left "Invalid model name"
 
 
 -- R-O model
