@@ -11,7 +11,7 @@ import qualified Model as M
 --------------------------------------------------------------------------------
 
 progName = "soilro"
-version  = "v1.1.2"
+version  = "v1.2.0"
 
 
 main :: IO ()
